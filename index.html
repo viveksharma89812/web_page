@@ -35,6 +35,10 @@ button:active{transform:scale(.95)}
 .sparkle{position:absolute;color:rgba(255,255,255,.7);font-size:20px;animation:twinkle 3s ease-in-out infinite}
 .s1{top:10%;left:9%}.s2{top:16%;right:9%;animation-delay:.8s}.s3{bottom:12%;left:12%;animation-delay:1.5s}.s4{bottom:10%;right:11%;animation-delay:.4s}
 @keyframes twinkle{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2) rotate(20deg)}}
+.photos{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.photos img{width:min(100%,200px);height:200px;object-fit:cover;border-radius:18px;border:3px solid rgba(255,255,255,.4);box-shadow:0 8px 24px rgba(0,0,0,.35);transform:rotate(-3deg);transition:transform .2s}
+.photos img:nth-child(even){transform:rotate(3deg)}
+.photos img:hover{transform:scale(1.06) rotate(0)}
 .hidden{display:none!important}
 .gift{font-size:64px;margin-bottom:14px;animation:shake 1.8s ease-in-out infinite}
 @keyframes shake{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(-12deg)}20%{transform:rotate(12deg)}30%{transform:rotate(-8deg)}40%{transform:rotate(8deg)}}
@@ -74,6 +78,9 @@ button:disabled{opacity:.6;cursor:default}
   <p class="eyebrow">Today is all about you</p>
   <h1>Happy <span>Birthday!</span></h1>
   <p class="message">Wishing you a day full of laughter, love and cake, and a year full of everything that makes you smile. You deserve all the happiness in the world.</p>
+  <div class="photos">
+    <img src="images/pic1.jpg" alt="Memory 1" onerror="this.style.display='none'">
+  </div>
   <div class="divider" aria-hidden="true"></div>
   <button id="b">Celebrate 🎉</button>
 </main>
