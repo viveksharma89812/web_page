@@ -35,7 +35,13 @@ button:active{transform:scale(.95)}
 .sparkle{position:absolute;color:rgba(255,255,255,.7);font-size:20px;animation:twinkle 3s ease-in-out infinite}
 .s1{top:10%;left:9%}.s2{top:16%;right:9%;animation-delay:.8s}.s3{bottom:12%;left:12%;animation-delay:1.5s}.s4{bottom:10%;right:11%;animation-delay:.4s}
 @keyframes twinkle{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2) rotate(20deg)}}
-@media (max-width:480px){body{padding:14px}.card{border-radius:24px}.cake{transform-origin:center;width:100px;height:92px}.balloon{width:40px;height:52px}.message{line-height:1.7}.s1{left:5%}.s2{right:5%}}
+.hidden{display:none!important}
+.gift{font-size:64px;margin-bottom:14px;animation:shake 1.8s ease-in-out infinite}
+@keyframes shake{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(-12deg)}20%{transform:rotate(12deg)}30%{transform:rotate(-8deg)}40%{transform:rotate(8deg)}}
+.opts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+button.alt{color:var(--text);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25)}
+button:disabled{opacity:.6;cursor:default}
+@media (max-width:480px){body{padding:14px}.opts button{width:100%}.gift{font-size:52px}.card{border-radius:24px}.cake{transform-origin:center;width:100px;height:92px}.balloon{width:40px;height:52px}.message{line-height:1.7}.s1{left:5%}.s2{right:5%}}
 @media (max-height:560px){body{padding:10px}.card{padding:20px 18px}.cake{display:none}.divider{margin:16px auto}.message{margin-top:12px}}
 @media (min-width:1024px){.card{width:min(100%,820px)}.balloon{width:70px;height:88px}.message{max-width:560px;font-size:1.25rem}}
 @media (hover:hover){button:hover{transform:scale(1.06)}}
@@ -44,7 +50,24 @@ button:active{transform:scale(.95)}
 </head>
 <body>
 <canvas id="c" aria-hidden="true"></canvas>
-<main class="card">
+<main class="card" id="intro">
+  <div class="gift" aria-hidden="true">🎁</div>
+  <p class="eyebrow">Psst…</p>
+  <h1>There is a <span>surprise for you</span></h1>
+  <div id="s1">
+    <div class="divider" aria-hidden="true"></div>
+    <div class="opts">
+      <button class="alt" data-c="1">Are you excited? 😊</button>
+      <button data-c="2">Are you super excited? 🤩</button>
+    </div>
+  </div>
+  <div id="s2" class="hidden">
+    <p class="message">Then you have to wait for the surprise…</p>
+    <div class="divider" aria-hidden="true"></div>
+    <button id="open" disabled>Wait 5…</button>
+  </div>
+</main>
+<main class="card hidden" id="final">
   <span class="sparkle s1" aria-hidden="true">✦</span><span class="sparkle s2" aria-hidden="true">✧</span>
   <span class="sparkle s3" aria-hidden="true">✧</span><span class="sparkle s4" aria-hidden="true">✦</span>
   <div class="cake" aria-hidden="true"><div class="tier t1"></div><div class="tier t2"></div><div class="candle"></div><div class="flame"></div></div>
@@ -73,7 +96,13 @@ button:active{transform:scale(.95)}
     requestAnimationFrame(tick)}
   tick();
   function show(){burst(W*.2,H*.6,70);burst(W*.8,H*.6,70);burst(W*.5,H*.4,90)}
-  setTimeout(show,500);
+  var intro=document.getElementById("intro"),fin=document.getElementById("final"),s1=document.getElementById("s1"),s2=document.getElementById("s2"),ob=document.getElementById("open");
+  Array.prototype.forEach.call(document.querySelectorAll("[data-c]"),function(b){b.addEventListener("click",function(){
+    s1.classList.add("hidden");s2.classList.remove("hidden");
+    var n=5;ob.textContent="Wait "+n+"…";
+    var iv=setInterval(function(){n--;if(n>0){ob.textContent="Wait "+n+"…"}else{clearInterval(iv);ob.disabled=false;ob.textContent="Open your surprise 🎁"}},1000);
+  })});
+  ob.addEventListener("click",function(){intro.classList.add("hidden");fin.classList.remove("hidden");show();setTimeout(show,700)});
   document.getElementById("b").addEventListener("click",show);
   addEventListener("pointerdown",function(e){burst(e.clientX,e.clientY,40)});
 })();
