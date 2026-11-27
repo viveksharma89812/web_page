@@ -1,171 +1,82 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Happy Birthday 🎂</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#111827" />
+<title>Happy Birthday!</title>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #ffe0ec, #e5d5ff);
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.container {
-    text-align: center;
-    padding: 25px;
-    width: 100%;
-}
-
-h1 {
-    color: #e84393;
-    font-size: clamp(30px, 6vw, 55px);
-    animation: fadeIn 2s ease;
-}
-
-.name {
-    color: #8e44ad;
-    font-size: clamp(22px, 4vw, 32px);
-    margin: 20px 0;
-}
-
-.cake {
-    font-size: 100px;
-    margin: 20px;
-    animation: bounce 2s ease-in-out infinite;
-}
-
-.message {
-    color: #555;
-    font-size: clamp(15px, 3vw, 19px);
-    line-height: 1.7;
-}
-
-button {
-    background: #e84393;
-    color: white;
-    border: none;
-    padding: 13px 25px;
-    border-radius: 25px;
-    margin-top: 25px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #c21870;
-}
-
-#surprise {
-    display: none;
-    margin-top: 20px;
-    color: #e84393;
-    font-size: 20px;
-    animation: fadeIn 1s ease;
-}
-
-/* Simple Animations */
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-/* Floating Balloons */
-
-.balloon {
-    position: absolute;
-    bottom: -100px;
-    font-size: 40px;
-    animation: floatUp 10s linear infinite;
-    pointer-events: none;
-}
-
-@keyframes floatUp {
-    from { transform: translateY(0); }
-    to { transform: translateY(-120vh); }
-}
-
-.b1 { left: 10%; animation-delay: 0s; }
-.b2 { left: 30%; animation-delay: 3s; }
-.b3 { left: 70%; animation-delay: 1s; }
-.b4 { left: 90%; animation-delay: 5s; }
-
-/* Mobile */
-
-@media(max-width: 600px) {
-    .cake {
-        font-size: 80px;
-    }
-
-    .container {
-        padding: 15px;
-    }
-}
-
-@media(prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation: none !important;
-    }
-}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{color-scheme:dark;--text:#f8fafc;--muted:#cbd5e1;--accent:#f9a8d4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{height:100%}
+body{min-height:100%;display:flex;overflow-x:hidden;overflow-y:auto;-webkit-tap-highlight-color:transparent;padding:24px;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 15% 20%,rgba(168,85,247,.3),transparent 40%),radial-gradient(ellipse at 85% 80%,rgba(236,72,153,.25),transparent 38%),linear-gradient(135deg,#0f172a,#111827 55%,#1e1b4b)}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+.balloon{position:fixed;bottom:-140px;width:56px;height:70px;border-radius:50% 50% 48% 48%;opacity:.85;animation:rise linear infinite;z-index:1}
+.balloon::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:50px;background:rgba(255,255,255,.4)}
+@keyframes rise{to{transform:translateY(-120vh) translateX(30px) rotate(8deg)}}
+.card{position:relative;z-index:2;margin:auto;width:min(100%,720px);padding:clamp(28px,6vw,60px) clamp(20px,6vw,56px);text-align:center;border:1px solid rgba(255,255,255,.18);border-radius:30px;background:rgba(255,255,255,.075);box-shadow:0 24px 80px rgba(0,0,0,.28);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);animation:appear .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes appear{from{opacity:0;transform:translateY(22px) scale(.98)}to{opacity:1;transform:none}}
+.cake{position:relative;width:120px;height:110px;margin:0 auto 20px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.tier{position:absolute;left:50%;transform:translateX(-50%);border-radius:10px}
+.t1{bottom:0;width:120px;height:36px;background:linear-gradient(#f472b6,#db2777)}
+.t2{bottom:36px;width:88px;height:30px;background:linear-gradient(#c4b5fd,#8b5cf6)}
+.candle{position:absolute;bottom:66px;left:50%;width:6px;height:22px;margin-left:-3px;background:#fde68a;border-radius:3px}
+.flame{position:absolute;bottom:88px;left:50%;width:12px;height:18px;margin-left:-6px;background:radial-gradient(#fff7ae,#fb923c);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;box-shadow:0 0 16px 4px rgba(251,146,60,.6);animation:flicker .3s ease-in-out infinite alternate}
+@keyframes flicker{from{transform:scale(1,1) rotate(-4deg)}to{transform:scale(.9,1.15) rotate(4deg)}}
+.eyebrow{margin-bottom:12px;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase}
+h1{font-size:clamp(2.4rem,9vw,5.2rem);line-height:1.05;letter-spacing:-.05em;font-weight:800}
+h1 span{display:block;padding-bottom:.12em;color:transparent;background:linear-gradient(100deg,#f9a8d4,#fde68a,#c4b5fd,#f9a8d4);background-size:300% 100%;background-clip:text;-webkit-background-clip:text;animation:shine 5s linear infinite}
+@keyframes shine{to{background-position:300% 0}}
+.message{max-width:500px;margin:22px auto 0;color:var(--muted);font-size:clamp(1rem,2.5vw,1.15rem);line-height:1.8}
+.divider{width:76px;height:3px;margin:26px auto;border-radius:999px;background:linear-gradient(90deg,#f9a8d4,#c4b5fd)}
+button{font:inherit;cursor:pointer;padding:12px 26px;border:0;border-radius:999px;color:#1e1b4b;font-weight:700;background:linear-gradient(100deg,#f9a8d4,#ddd6fe);transition:transform .15s}
+button:active{transform:scale(.95)}
+.sparkle{position:absolute;color:rgba(255,255,255,.7);font-size:20px;animation:twinkle 3s ease-in-out infinite}
+.s1{top:10%;left:9%}.s2{top:16%;right:9%;animation-delay:.8s}.s3{bottom:12%;left:12%;animation-delay:1.5s}.s4{bottom:10%;right:11%;animation-delay:.4s}
+@keyframes twinkle{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2) rotate(20deg)}}
+@media (max-width:480px){body{padding:14px}.card{border-radius:24px}.cake{transform-origin:center;width:100px;height:92px}.balloon{width:40px;height:52px}.message{line-height:1.7}.s1{left:5%}.s2{right:5%}}
+@media (max-height:560px){body{padding:10px}.card{padding:20px 18px}.cake{display:none}.divider{margin:16px auto}.message{margin-top:12px}}
+@media (min-width:1024px){.card{width:min(100%,820px)}.balloon{width:70px;height:88px}.message{max-width:560px;font-size:1.25rem}}
+@media (hover:hover){button:hover{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
 </head>
-
 <body>
-
-<div class="balloon b1">🎈</div>
-<div class="balloon b2">🎈</div>
-<div class="balloon b3">🎈</div>
-<div class="balloon b4">🎈</div>
-
-<div class="container">
-
-    <h1>🎉 Happy Birthday 🎉</h1>
-
-    <div class="name">Dear Birthday Star ❤️</div>
-
-    <div class="cake">🎂</div>
-
-    <div class="message">
-        Wishing you a very Happy Birthday! 🥳<br>
-        May your day be filled with happiness,<br>
-        love, laughter and beautiful memories. 💖
-    </div>
-
-    <button onclick="showMessage()">
-        🎁 Click for Surprise
-    </button>
-
-    <div id="surprise">
-        ❤️ You are Special! ❤️<br>
-        Have a Wonderful Year Ahead! 🎂
-    </div>
-
-</div>
-
+<canvas id="c" aria-hidden="true"></canvas>
+<main class="card">
+  <span class="sparkle s1" aria-hidden="true">✦</span><span class="sparkle s2" aria-hidden="true">✧</span>
+  <span class="sparkle s3" aria-hidden="true">✧</span><span class="sparkle s4" aria-hidden="true">✦</span>
+  <div class="cake" aria-hidden="true"><div class="tier t1"></div><div class="tier t2"></div><div class="candle"></div><div class="flame"></div></div>
+  <p class="eyebrow">Today is all about you</p>
+  <h1>Happy <span>Birthday!</span></h1>
+  <p class="message">Wishing you a day full of laughter, love and cake, and a year full of everything that makes you smile. You deserve all the happiness in the world.</p>
+  <div class="divider" aria-hidden="true"></div>
+  <button id="b">Celebrate 🎉</button>
+</main>
 <script>
-function showMessage() {
-    document.getElementById("surprise").style.display = "block";
-}
+(function(){
+  var cols=["#f9a8d4","#c4b5fd","#fde68a","#93c5fd","#86efac","#fda4af"];
+  for(var i=0;i<10;i++){var d=document.createElement("div");d.className="balloon";
+    d.style.left=(5+i*10)+"%";d.style.background=cols[i%cols.length];
+    d.style.animationDuration=(9+Math.random()*7)+"s";d.style.animationDelay=(-Math.random()*12)+"s";
+    document.body.appendChild(d);}
+  var cv=document.getElementById("c"),x=cv.getContext("2d"),p=[],W,H;
+  function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}rs();addEventListener("resize",rs);
+  function burst(cx,cy,n){for(var i=0;i<n;i++){var a=Math.random()*Math.PI*2,s=3+Math.random()*7;
+    p.push({x:cx,y:cy,vx:Math.cos(a)*s,vy:Math.sin(a)*s-4,w:6+Math.random()*6,h:3+Math.random()*4,
+    r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[(Math.random()*cols.length)|0],l:140+Math.random()*80});}}
+  function tick(){x.clearRect(0,0,W,H);
+    for(var i=p.length-1;i>=0;i--){var q=p[i];q.vy+=.14;q.vx*=.99;q.x+=q.vx;q.y+=q.vy;q.r+=q.vr;q.l--;
+      if(q.l<=0||q.y>H+20){p.splice(i,1);continue}
+      x.save();x.translate(q.x,q.y);x.rotate(q.r);x.globalAlpha=Math.min(1,q.l/40);x.fillStyle=q.c;x.fillRect(-q.w/2,-q.h/2,q.w,q.h);x.restore();}
+    requestAnimationFrame(tick)}
+  tick();
+  function show(){burst(W*.2,H*.6,70);burst(W*.8,H*.6,70);burst(W*.5,H*.4,90)}
+  setTimeout(show,500);
+  document.getElementById("b").addEventListener("click",show);
+  addEventListener("pointerdown",function(e){burst(e.clientX,e.clientY,40)});
+})();
 </script>
-
 </body>
 </html>
