@@ -46,8 +46,10 @@ mark{display:inline-block;padding:0 .18em;color:var(--ink);background:var(--pink
 .ticker{position:fixed;left:0;right:0;bottom:0;z-index:6;padding-bottom:env(safe-area-inset-bottom,0px);overflow:hidden;background:var(--ink);color:var(--yellow);font-weight:800;letter-spacing:.12em}
 .track{display:inline-block;white-space:nowrap;padding:12px 0;animation:tick 40s linear infinite}
 @keyframes tick{to{transform:translateX(-50%)}}
+#yes,#no{transition:transform .45s cubic-bezier(.34,1.56,.64,1),box-shadow .1s}
+#no{min-width:12rem;white-space:nowrap}
 .hidden{display:none!important}
-@media (max-width:480px){body{padding:14px 14px 70px}.card{border-radius:22px;box-shadow:7px 7px 0 var(--ink)}.balloon{width:40px;height:52px}.gift{font-size:52px}.opts .btn{width:100%}}
+@media (max-width:480px){body{padding:14px 14px 70px}.card{border-radius:22px;box-shadow:7px 7px 0 var(--ink)}.balloon{width:40px;height:52px}.gift{font-size:52px}}
 @media (max-height:560px){body{padding-top:10px}.card{padding:20px 18px}.cake,.gift{display:none}}
 @media (min-width:1024px){.card{width:min(100%,780px)}.balloon{width:70px;height:88px}.msg{max-width:560px;font-size:1.25rem}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
@@ -110,25 +112,39 @@ mark{display:inline-block;padding:0 .18em;color:var(--ink);background:var(--pink
   addEventListener("pointerdown",function(e){burst(e.clientX,e.clientY,35)});
 
   var intro=document.getElementById("intro"),fin=document.getElementById("final"),s1=document.getElementById("s1"),s2=document.getElementById("s2"),ob=document.getElementById("open");
-  var no=document.getElementById("no"),yes=document.getElementById("yes"),cnt=0,
-      txt=["No 😅","Are you sure? 🥺","Try again 😜","Can’t catch me 😎","Just say yes 🙈"];
+  var no=document.getElementById("no"),yes=document.getElementById("yes"),cnt=0,tx=0,ty=0,last=0,
+      txt=["No 😅","Are you sure? 🥺","Try again 😜","Nope, can’t 😎","Just say yes 🙈"];
   yes.addEventListener("click",function(){
     s1.classList.add("hidden");s2.classList.remove("hidden");
     var n=5;ob.textContent="Wait "+n+"…";
     var iv=setInterval(function(){n--;if(n>0){ob.textContent="Wait "+n+"…"}else{clearInterval(iv);ob.disabled=false;ob.textContent="Open your surprise 🎁"}},1000);
   });
   function dodge(e){
-    if(e&&e.cancelable)e.preventDefault();
+    var now=Date.now();if(now-last<350)return;last=now;
+    if(e&&e.cancelable&&e.type!=="pointermove")e.preventDefault();
     cnt++;
-    var r=no.getBoundingClientRect(),w=r.width||90,h=r.height||44;
-    no.style.position="fixed";no.style.zIndex="10";no.style.width="auto";
-    no.style.left=Math.max(10,Math.random()*(innerWidth-w-10))+"px";
-    no.style.top=Math.max(10,Math.random()*(innerHeight-h-60))+"px";
+    var r=no.getBoundingClientRect(),w=no.offsetWidth,h=no.offsetHeight,
+        pcx=r.left+r.width/2,pcy=r.top+r.height/2,bcx=pcx-tx,bcy=pcy-ty;
+    var sc=Math.min(1+cnt*.2,2.2,(innerWidth-40)/yes.offsetWidth);
+    var yr=yes.getBoundingClientRect(),yw=yes.offsetWidth*sc,yh=yes.offsetHeight*sc,
+        ycx=yr.left+yr.width/2,ycy=yr.top+yr.height/2;
+    var m=12,maxX=innerWidth-w-m,maxY=innerHeight-h-64,cx,cy,ok;
+    for(var k=0;k<40;k++){
+      cx=m+w/2+Math.random()*Math.max(0,maxX-m);cy=m+h/2+Math.random()*Math.max(0,maxY-m);
+      ok=(Math.abs(cx-ycx)>(yw+w)/2+16||Math.abs(cy-ycy)>(yh+h)/2+16)&&Math.hypot(cx-pcx,cy-pcy)>140;
+      if(ok&&e&&e.clientX!=null)ok=Math.hypot(cx-e.clientX,cy-e.clientY)>120;
+      if(ok)break;
+    }
+    tx=cx-bcx;ty=cy-bcy;
+    no.style.transform="translate("+tx+"px,"+ty+"px) rotate("+((Math.random()-.5)*24)+"deg)";
     no.textContent=txt[cnt%txt.length];
-    var s=Math.min(1+cnt*.25,2.4);
-    yes.style.fontSize=(16.8*s)+"px";yes.style.padding=(13*s)+"px "+(28*s)+"px";
+    yes.style.transform="scale("+sc+")";
   }
-  no.addEventListener("pointerenter",dodge);
+  addEventListener("pointermove",function(e){
+    if(s1.classList.contains("hidden")||e.pointerType==="touch")return;
+    var r=no.getBoundingClientRect();
+    if(Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2))<Math.max(r.width/2+40,90))dodge(e);
+  });
   no.addEventListener("pointerdown",dodge);
   no.addEventListener("click",dodge);
   ob.addEventListener("click",function(){intro.classList.add("hidden");fin.classList.remove("hidden");show();setTimeout(show,700)});
