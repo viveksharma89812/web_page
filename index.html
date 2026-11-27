@@ -1,192 +1,326 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#111827" />
-  <title>Thanks for Everything</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    :root {
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --accent: #f9a8d4;
-      --accent-2: #c4b5fd;
+<title>Happy Birthday ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: radial-gradient(circle at center, #4b176c, #170027 75%);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+/* Main Section */
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 15px;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    font-size: clamp(32px, 7vw, 75px);
+    color: #ffe58a;
+    text-shadow: 0 0 10px #ff1493,
+                 0 0 30px #ff1493,
+                 0 0 60px #ff69b4;
+    animation: titleGlow 2s infinite alternate;
+}
+
+@keyframes titleGlow {
+    from { transform: scale(1); }
+    to { transform: scale(1.07); }
+}
+
+.name {
+    font-size: clamp(25px, 5vw, 42px);
+    color: #ff9ad5;
+    margin-top: 20px;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    50% { transform: scale(1.12); }
+}
+
+/* Birthday Cake */
+.cake {
+    font-size: clamp(90px, 18vw, 150px);
+    margin: 25px 0;
+    animation: cakeBounce 2s infinite;
+    filter: drop-shadow(0 0 20px #ff80cc);
+}
+
+@keyframes cakeBounce {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-18px) rotate(4deg); }
+}
+
+.message {
+    font-size: clamp(15px, 3vw, 22px);
+    line-height: 1.8;
+    max-width: 600px;
+    color: #fff1fa;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+button {
+    border: none;
+    padding: 14px 25px;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(45deg, #ff1493, #ffbd00);
+    color: white;
+    box-shadow: 0 0 20px #ff1493;
+    transition: .3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 35px #ff1493;
+}
+
+/* Balloons */
+.balloon {
+    position: fixed;
+    bottom: -150px;
+    font-size: clamp(35px, 6vw, 65px);
+    animation: balloonFly linear infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+@keyframes balloonFly {
+    0% { transform: translateY(0) rotate(-10deg); }
+    50% { transform: translateY(-60vh) rotate(10deg); }
+    100% { transform: translateY(-120vh) rotate(-10deg); }
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    top: -15px;
+    width: 8px;
+    height: 12px;
+    z-index: 3;
+    pointer-events: none;
+    animation: confettiFall linear infinite;
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translateY(110vh) rotate(900deg);
     }
+}
 
-    body {
-      min-height: 100vh;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      padding: 24px;
-      color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(ellipse at 15% 20%, rgba(168, 85, 247, .28), transparent 40%),
-        radial-gradient(ellipse at 85% 80%, rgba(236, 72, 153, .22), transparent 38%),
-        linear-gradient(135deg, #0f172a, #111827 55%, #1e1b4b);
-    }
+/* Surprise Message */
+#surprise {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px solid #ff8bd5;
+    border-radius: 20px;
+    background: rgba(255,255,255,.1);
+    box-shadow: 0 0 25px #ff1493;
+    animation: pop .7s ease;
+    font-size: clamp(17px, 3vw, 25px);
+    line-height: 1.6;
+}
 
-    .glow {
-      position: fixed;
-      width: 340px;
-      height: 340px;
-      border-radius: 50%;
-      filter: blur(85px);
-      opacity: .25;
-      pointer-events: none;
-      animation: float 9s ease-in-out infinite alternate;
-    }
-    .glow.one { top: -120px; left: -100px; background: #a855f7; }
-    .glow.two { right: -120px; bottom: -130px; background: #ec4899; animation-delay: -4s; }
+@keyframes pop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
 
-    .card {
-      position: relative;
-      width: min(100%, 760px);
-      padding: clamp(32px, 7vw, 72px) clamp(22px, 6vw, 64px);
-      text-align: center;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 30px;
-      background: rgba(255,255,255,.075);
-      box-shadow: 0 24px 80px rgba(0,0,0,.28);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      animation: appear .9s cubic-bezier(.2,.8,.2,1) both;
-    }
+/* Fireworks */
+.firework {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #ffec80;
+    box-shadow: 0 0 15px 5px #ff1493;
+    animation: boom 1.2s ease-out forwards;
+    pointer-events: none;
+    z-index: 1;
+}
 
-    .heart {
-      display: inline-grid;
-      place-items: center;
-      width: 76px;
-      height: 76px;
-      margin-bottom: 25px;
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 24px;
-      color: #fbcfe8;
-      background: rgba(249,168,212,.12);
-      font-size: 36px;
-      animation: heartbeat 2.2s ease-in-out infinite;
-    }
+@keyframes boom {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(18); opacity: 0; }
+}
 
-    .eyebrow {
-      margin-bottom: 14px;
-      color: var(--accent);
-      font-size: .78rem;
-      font-weight: 700;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      font-size: clamp(2.4rem, 8vw, 5.4rem);
-      line-height: 1.04;
-      letter-spacing: -.055em;
-      font-weight: 800;
-      text-wrap: balance;
-    }
-
-    h1 span {
-      display: block;
-      padding-bottom: .12em;
-      color: transparent;
-      background: linear-gradient(100deg, #f9a8d4, #ddd6fe 55%, #fbcfe8);
-      background-clip: text;
-      -webkit-background-clip: text;
+/* Mobile */
+@media(max-width: 600px) {
+    .container {
+        padding: 25px 18px;
     }
 
     .message {
-      max-width: 510px;
-      margin: 24px auto 0;
-      color: var(--muted);
-      font-size: clamp(1rem, 2.5vw, 1.15rem);
-      line-height: 1.8;
+        max-width: 340px;
     }
 
-    .divider {
-      width: 76px;
-      height: 3px;
-      margin: 30px auto;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #f9a8d4, #c4b5fd);
+    button {
+        padding: 13px 20px;
+        font-size: 14px;
     }
 
-    .signoff {
-      color: #f1f5f9;
-      font-size: .98rem;
-      letter-spacing: .04em;
+    .cake {
+        margin: 20px 0;
     }
+}
 
-    .sparkle {
-      position: absolute;
-      color: rgba(255,255,255,.7);
-      font-size: 20px;
-      animation: twinkle 3s ease-in-out infinite;
-      user-select: none;
-    }
-    .s1 { top: 13%; left: 12%; }
-    .s2 { top: 20%; right: 11%; animation-delay: .8s; font-size: 14px; }
-    .s3 { bottom: 15%; left: 16%; animation-delay: 1.5s; font-size: 14px; }
-    .s4 { bottom: 13%; right: 14%; animation-delay: .4s; }
-
-    @keyframes appear {
-      from { opacity: 0; transform: translateY(22px) scale(.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      12% { transform: scale(1.08); }
-      24% { transform: scale(1); }
-      36% { transform: scale(1.05); }
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: .35; transform: scale(.85) rotate(0deg); }
-      50% { opacity: 1; transform: scale(1.2) rotate(20deg); }
-    }
-    @keyframes float {
-      from { transform: translate(0, 0); }
-      to { transform: translate(35px, -25px); }
-    }
-
-    @media (max-width: 480px) {
-      body { padding: 16px; }
-      .card { border-radius: 24px; }
-      .heart { width: 64px; height: 64px; border-radius: 20px; font-size: 30px; margin-bottom: 22px; }
-      .message { line-height: 1.7; }
-      .sparkle.s1 { left: 6%; }
-      .sparkle.s2 { right: 6%; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
+/* Reduce motion accessibility */
+@media(prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-      }
     }
-  </style>
+}
+</style>
 </head>
+
 <body>
-  <div class="glow one" aria-hidden="true"></div>
-  <div class="glow two" aria-hidden="true"></div>
 
-  <main class="card">
-    <span class="sparkle s1" aria-hidden="true">✦</span>
-    <span class="sparkle s2" aria-hidden="true">✧</span>
-    <span class="sparkle s3" aria-hidden="true">✧</span>
-    <span class="sparkle s4" aria-hidden="true">✦</span>
+<div class="container">
 
-    <div class="heart" aria-hidden="true">♡</div>
-    <p class="eyebrow">With heartfelt gratitude</p>
-    <h1>Thanks <span>for Everything</span></h1>
-    <p class="message">
-      For every little thing, every kind word, every moment, and every bit of support —
-      thank you. It all means more than words can say.
-    </p>
-    <div class="divider" aria-hidden="true"></div>
-    <p class="signoff">Truly grateful, always. ✨</p>
-  </main>
+    <h1>🎉 Happy Birthday 🎉</h1>
+
+    <div class="name">Dear Birthday Star ❤️</div>
+
+    <div class="cake">🎂</div>
+
+    <div class="message">
+        Today is your special day! 🥳<br>
+        May your life be filled with endless happiness,
+        love, success and beautiful memories. ✨<br>
+        Keep Smiling & Keep Shining! 💖
+    </div>
+
+    <div class="buttons">
+        <button onclick="showSurprise()">
+            🎁 Open Surprise
+        </button>
+
+        <button onclick="toggleMusic()" id="musicBtn">
+            🎵 Play Music
+        </button>
+    </div>
+
+    <div id="surprise">
+        🎊 SURPRISE! 🎊<br>
+        You are one of a kind! ❤️<br>
+        May all your dreams come true! 🌹<br>
+        Lots of Love & Best Wishes! 🥰
+    </div>
+
+</div>
+
+<!-- Background Music -->
+<audio id="birthdayMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// Floating Balloons
+const balloonEmojis = ["🎈", "🎈", "💖", "🎈", "🎈"];
+
+balloonEmojis.forEach((emoji, index) => {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.innerHTML = emoji;
+    balloon.style.left = (index * 20 + 5) + "%";
+    balloon.style.animationDuration = (7 + Math.random() * 5) + "s";
+    balloon.style.animationDelay = (index * 1.2) + "s";
+    document.body.appendChild(balloon);
+});
+
+// Falling Confetti
+for (let i = 0; i < 100; i++) {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
+
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.backgroundColor =
+        ["#ff1493", "#ffd700", "#00ffff", "#ffffff", "#9b59ff"]
+        [Math.floor(Math.random() * 5)];
+
+    confetti.style.animationDuration = (3 + Math.random() * 5) + "s";
+    confetti.style.animationDelay = Math.random() * 5 + "s";
+
+    document.body.appendChild(confetti);
+}
+
+// Surprise
+function showSurprise() {
+    document.getElementById("surprise").style.display = "block";
+    createFireworks();
+}
+
+// Fireworks
+function createFireworks() {
+    for (let i = 0; i < 12; i++) {
+        const firework = document.createElement("div");
+        firework.className = "firework";
+
+        firework.style.left = Math.random() * 90 + 5 + "%";
+        firework.style.top = Math.random() * 70 + 10 + "vh";
+
+        document.body.appendChild(firework);
+
+        setTimeout(() => firework.remove(), 1300);
+    }
+}
+
+// Automatic Fireworks
+setInterval(createFireworks, 2500);
+
+// Music
+function toggleMusic() {
+    const music = document.getElementById("birthdayMusic");
+    const btn = document.getElementById("musicBtn");
+
+    if (music.paused) {
+        music.play().then(() => {
+            btn.innerHTML = "⏸ Pause Music";
+        }).catch(() => {
+            alert("Music could not be played. Please try again.");
+        });
+    } else {
+        music.pause();
+        btn.innerHTML = "🎵 Play Music";
+    }
+}
+
+</script>
+
 </body>
 </html>
